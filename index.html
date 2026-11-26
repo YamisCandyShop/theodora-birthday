@@ -1,125 +1,146 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday, Theodora ❤️</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fff5ee" />
+  <meta name="description" content="A tiny birthday surprise for Theodora." />
+  <title>For Theodora — Birthday.exe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div class="paper-grain"></div>
 
-  <header class="top-bar">
-    <div class="music-control">
-      <button id="soundToggle" type="button">♫ sound off</button>
-    </div>
-    <div class="progress">
-      <div id="progressFill"></div>
-    </div>
+  <header class="topbar">
+    <span class="tiny-heart">♥</span>
+    <span>THEODORA'S BIRTHDAY SURPRISE</span>
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">♫ sound off</button>
   </header>
 
-  <main>
+  <main class="app-shell">
+    <div class="progress"><span id="progressFill"></span></div>
 
-    <!-- SCREEN 1 -->
     <section class="screen active" id="screen-0">
-      <div class="content">
-        <div class="penguin">🐧</div>
-        <p class="small-text">A LITTLE SURPRISE FOR YOU</p>
-        <h1>Hey, Theodora! ❤️</h1>
-        <p>I made something special for you...</p>
-        <p>Are you ready?</p>
-        <div class="buttons">
-          <button type="button" onclick="go(1)">YES! 💗</button>
-          <button type="button" onclick="go(1)">Of course!</button>
+      <div class="stamp">A VERY IMPORTANT DELIVERY</div>
+      <p class="eyebrow">ATTENTION, THEODORA</p>
+      <h1>PLS ACCEPT<br>THE GIFT<span class="wobble">!</span></h1>
+
+      <div class="hero-penguin" aria-label="Cute penguin illustration">
+        <div class="heart h1">♥</div>
+        <div class="heart h2">♥</div>
+        <div class="penguin">
+          <div class="wing left"></div>
+          <div class="wing right"></div>
+          <div class="belly"></div>
+          <div class="eye e1"></div>
+          <div class="eye e2"></div>
+          <div class="beak"></div>
+          <div class="feet"></div>
         </div>
+        <span class="spark s1">✦</span>
+        <span class="spark s2">✧</span>
       </div>
+
+      <p class="subcopy">A tiny gift has arrived. No refunds. No exchanges. Only vibes.</p>
+      <div class="actions">
+        <button class="pill primary" id="acceptBtn">YES, GIMME IT <span>♡</span></button>
+        <button class="pill secondary" id="noBtn">NO THANKS</button>
+      </div>
+      <p class="micro" id="noMessage">(there is a correct answer, just saying)</p>
     </section>
 
-    <!-- SCREEN 2 -->
     <section class="screen" id="screen-1">
-      <div class="content">
-        <div class="penguin">🐧💕</div>
-        <h1>First, choose your penguin!</h1>
-        <p>Which one looks more like you?</p>
-        <div class="buttons">
-          <button type="button" onclick="go(2)">The cute one 🐧</button>
-          <button type="button" onclick="go(2)">The silly one 🐧</button>
-        </div>
+      <p class="eyebrow">STEP 02 · THE IMPORTANT CHOICE</p>
+      <h2>Choose a penguin</h2>
+      <p class="subcopy">Each one has something. Choose wisely. Or don't. We're not your manager.</p>
+
+      <div class="penguin-options">
+        <button class="penguin-card" data-penguin="0">
+          <span class="mini-penguin pink">🐧</span>
+          <b>THE SWEET ONE</b>
+          <small>probably innocent</small>
+        </button>
+        <button class="penguin-card" data-penguin="1">
+          <span class="mini-penguin yellow">🐧</span>
+          <b>THE CHAOTIC ONE</b>
+          <small>zero supervision</small>
+        </button>
+        <button class="penguin-card" data-penguin="2">
+          <span class="mini-penguin blue">🐧</span>
+          <b>THE DRAMATIC ONE</b>
+          <small>has feelings™</small>
+        </button>
       </div>
+
+      <p class="choice-message" id="choiceMessage">Tap one of the suspicious little guys.</p>
+      <button class="pill primary hidden" id="toBirthday">CONTINUE, YOUR MAJESTY →</button>
     </section>
 
-    <!-- SCREEN 3 -->
     <section class="screen" id="screen-2">
-      <div class="content">
-        <p class="small-text">A LETTER FOR YOU</p>
-        <h1>Happy Birthday! 🎂</h1>
+      <div class="birthday-banner">HAPPY BIRTHDAY</div>
+      <div class="cake">🎂</div>
+      <h2 class="birthday-title">THEODORA!</h2>
+      <p class="subcopy">Another year older, still causing problems. Iconic behaviour.</p>
 
-        <p>
-          Today is all about you, and I hope it brings you as much happiness
-          as you bring to the people around you.
-        </p>
-
-        <p>
-          I wanted to make you something a little different,
-          something that would make you smile.
-        </p>
-
-        <p>
-          Never forget how special you are. You deserve all the
-          happiness, love and beautiful moments in the world.
-        </p>
-
+      <div class="letter-card">
+        <div class="tape"></div>
         <div class="photo-slot" id="photoSlot">
-          <img
-            src="assets/theodora.jpg"
-            alt="A special memory"
-            style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"
-            onerror="this.style.display='none';this.parentElement.innerHTML='<span>📸</span><small>YOUR PHOTO GOES HERE</small>';"
-          >
+          <span>📸</span>
+          <small>YOUR PHOTO GOES HERE</small>
         </div>
-
-        <p>With love, ❤️</p>
-        <button type="button" onclick="go(3)">Continue 💌</button>
+        <div class="letter-copy">
+          <h3>Dear Theodora,</h3>
+          <p id="birthdayMessage">Happy birthday to the human version of a plot twist. I hope your day is full of cake, laughter, and people who understand your level of weird. Stay exactly as chaotic, funny and lovely as you are.</p>
+          <p class="signature">— your favourite troublemaker ♡</p>
+        </div>
       </div>
+
+      <button class="pill primary" id="toQuestion">OKAY, NEXT SURPRISE →</button>
     </section>
 
-    <!-- SCREEN 4 -->
     <section class="screen" id="screen-3">
-      <div class="content">
-        <div class="penguin">💗🐧💗</div>
-        <h1>One little question...</h1>
-        <p>Will you be my favourite notification? 🥺</p>
-        <div class="buttons">
-          <button type="button" onclick="go(4)">YES! ❤️</button>
-          <button type="button" onclick="go(4)">Obviously! 💕</button>
-        </div>
+      <p class="eyebrow">A COMPLETELY NORMAL QUESTION</p>
+      <div class="question-doodle">💌</div>
+      <h2>Will you be<br>my favourite<br>notification?</h2>
+      <p class="subcopy">No pressure. (Tiny amount of pressure.)</p>
+
+      <div class="actions question-actions">
+        <button class="pill primary" id="questionYes">YES, OBVIOUSLY ♡</button>
+        <button class="pill secondary" id="questionNo">NO</button>
       </div>
+      <p class="micro" id="questionMessage">Choose with your heart. Or your thumb.</p>
     </section>
 
-    <!-- SCREEN 5 -->
     <section class="screen" id="screen-4">
-      <div class="content">
-        <div class="penguin">🐧❤️🐧</div>
-        <h1>Sending you a big hug!</h1>
-        <p>
-          I hope your birthday is as wonderful and lovely as you are.
-        </p>
-        <h2>Happy Birthday, Theodora! 🎂💕</h2>
-        <p>Made with ❤️ just for you.</p>
-      </div>
-    </section>
+      <p class="eyebrow">FINAL DELIVERY · HANDLE WITH CARE</p>
+      <h2>Virtual hug<br>for ya!</h2>
 
+      <div class="hug-scene">
+        <div class="hug-penguin gold">🐧<span>♡</span></div>
+        <div class="hug-penguin mint">🐧<span>♡</span></div>
+        <div class="hug-heart">♥</div>
+      </div>
+
+      <p class="big-note">I MISS YOU<br><span>…even when you make fun of me.</span></p>
+
+      <div class="final-note">
+        <p>Happy birthday, Theodora.</p>
+        <p>Hope this little corner of the internet made you smile. You deserve all the good things — and an unreasonable amount of cake.</p>
+        <b>Made with questionable coding skills & lots of love. ♡</b>
+      </div>
+
+      <button class="pill primary" id="restartBtn">WATCH AGAIN ↻</button>
+    </section>
   </main>
 
-  <audio
-    id="bgMusic"
-    src="assets/birthday.mp3"
-    loop
-    preload="auto">
-  </audio>
+  <div class="toast" id="toast" role="status"></div>
 
-  <script src="script.js?v=3"></script>
+  <audio id="bgMusic" src="assets/birthday.mp3" loop preload="auto"></audio>
 
+  <script src="script.js"></script>
 </body>
 </html>
