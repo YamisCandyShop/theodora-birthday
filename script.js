@@ -14,25 +14,27 @@ document.getElementById('restartBtn').addEventListener('click',()=>{document.get
 const editor=document.getElementById('editor');document.getElementById('editToggle').addEventListener('click',()=>editor.classList.toggle('open'));document.getElementById('closeEditor').addEventListener('click',()=>editor.classList.remove('open'));
 document.getElementById('applyEdits').addEventListener('click',()=>{document.getElementById('birthdayMessage').textContent=document.getElementById('editMessage').value;document.querySelector('.signature').textContent='— '+document.getElementById('editSignature').value;document.querySelector('.final-note p:nth-child(2)').textContent=document.getElementById('editFinal').value;editor.classList.remove('open');toast('Your edits are applied in this browser!')});
 document.getElementById('downloadSettings').addEventListener('click',()=>{const data={birthdayMessage:document.getElementById('editMessage').value,signature:document.getElementById('editSignature').value,finalNote:document.getElementById('editFinal').value};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='theodora-birthday-texts.json';a.click();URL.revokeObjectURL(a.href);toast('Text settings downloaded!')});
+
 // Background music
 const music = document.getElementById('bgMusic');
 const soundToggle = document.getElementById('soundToggle');
 
 let soundOn = false;
 
-soundToggle.addEventListener('click', async () => {
-  if (!soundOn) {
-    try {
-      await music.play();
-      soundOn = true;
-      soundToggle.textContent = '♫ sound on';
-    } catch (error) {
-      toast('Could not play music. Check the MP3 file.');
+if (music && soundToggle) {
+  soundToggle.addEventListener('click', async () => {
+    if (!soundOn) {
+      try {
+        await music.play();
+        soundOn = true;
+        soundToggle.textContent = '♫ sound on';
+      } catch (error) {
+        toast('Could not play music. Check the MP3 file.');
+      }
+    } else {
+      music.pause();
+      soundOn = false;
+      soundToggle.textContent = '♫ sound off';
     }
-  } else {
-    music.pause();
-    soundOn = false;
-    soundToggle.textContent = '♫ sound off';
-  }
-});
-let soundOn=false;document.getElementById('soundToggle').addEventListener('click',e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?'♫ sound on':'♫ sound off';toast(soundOn?'Sound toggle is on (no music file added yet).':'Sound off')});
+  });
+}
