@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fff5ee" />
+  <meta name="description" content="A tiny birthday surprise for Theodora." />
+  <title>For Theodora — Birthday.exe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="paper-grain"></div>
+  <header class="topbar"><span class="tiny-heart">♥</span><span>THEODORA'S BIRTHDAY SURPRISE</span><button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">♫ sound off</button></header>
+  <main class="app-shell">
+    <div class="progress"><span id="progressFill"></span></div>
+    <section class="screen active" id="screen-0">
+      <div class="stamp">A VERY IMPORTANT DELIVERY</div>
+      <p class="eyebrow">ATTENTION, THEODORA</p>
+      <h1>PLS ACCEPT<br>THE GIFT<span class="wobble">!</span></h1>
+      <div class="hero-penguin" aria-label="Cute penguin illustration"><div class="heart h1">♥</div><div class="heart h2">♥</div><div class="penguin"><div class="wing left"></div><div class="wing right"></div><div class="belly"></div><div class="eye e1"></div><div class="eye e2"></div><div class="beak"></div><div class="feet"></div></div><span class="spark s1">✦</span><span class="spark s2">✧</span></div>
+      <p class="subcopy">A tiny gift has arrived. No refunds. No exchanges. Only vibes.</p>
+      <div class="actions"><button class="pill primary" id="acceptBtn">YES, GIMME IT <span>♡</span></button><button class="pill secondary" id="noBtn">NO THANKS</button></div>
+      <p class="micro" id="noMessage">(there is a correct answer, just saying)</p>
+    </section>
+
+    <section class="screen" id="screen-1">
+      <p class="eyebrow">STEP 02 · THE IMPORTANT CHOICE</p>
+      <h2>Choose a penguin</h2><p class="subcopy">Each one has something. Choose wisely. Or don't. We're not your manager.</p>
+      <div class="penguin-options">
+        <button class="penguin-card" data-penguin="0"><span class="mini-penguin pink">🐧</span><b>THE SWEET ONE</b><small>probably innocent</small></button>
+        <button class="penguin-card" data-penguin="1"><span class="mini-penguin yellow">🐧</span><b>THE CHAOTIC ONE</b><small>zero supervision</small></button>
+        <button class="penguin-card" data-penguin="2"><span class="mini-penguin blue">🐧</span><b>THE DRAMATIC ONE</b><small>has feelings™</small></button>
+      </div>
+      <p class="choice-message" id="choiceMessage">Tap one of the suspicious little guys.</p>
+      <button class="pill primary hidden" id="toBirthday">CONTINUE, YOUR MAJESTY →</button>
+    </section>
+
+    <section class="screen" id="screen-2">
+      <div class="birthday-banner">HAPPY BIRTHDAY</div>
+      <div class="cake">🎂</div>
+      <h2 class="birthday-title">THEODORA!</h2>
+      <p class="subcopy">Another year older, still causing problems. Iconic behaviour.</p>
+      <div class="letter-card">
+        <div class="tape"></div><div class="photo-slot" id="photoSlot"><span>📸</span><small>YOUR PHOTO GOES HERE</small></div>
+        <div class="letter-copy"><h3>Dear Theodora,</h3><p id="birthdayMessage">Happy birthday to the human version of a plot twist. I hope your day is full of cake, laughter, and people who understand your level of weird. Stay exactly as chaotic, funny and lovely as you are.</p><p class="signature">— your favourite troublemaker ♡</p></div>
+      </div>
+      <label class="upload-label" for="photoUpload">＋ Add a photo of you two</label><input id="photoUpload" type="file" accept="image/*" hidden>
+      <button class="pill primary" id="toQuestion">OKAY, NEXT SURPRISE →</button>
+    </section>
+
+    <section class="screen" id="screen-3">
+      <p class="eyebrow">A COMPLETELY NORMAL QUESTION</p>
+      <div class="question-doodle">💌</div><h2>Will you be<br>my favourite<br>notification?</h2>
+      <p class="subcopy">No pressure. (Tiny amount of pressure.)</p>
+      <div class="actions question-actions"><button class="pill primary" id="questionYes">YES, OBVIOUSLY ♡</button><button class="pill secondary" id="questionNo">NO</button></div>
+      <p class="micro" id="questionMessage">Choose with your heart. Or your thumb.</p>
+    </section>
+
+    <section class="screen" id="screen-4">
+      <p class="eyebrow">FINAL DELIVERY · HANDLE WITH CARE</p>
+      <h2>Virtual hug<br>for ya!</h2>
+      <div class="hug-scene"><div class="hug-penguin gold">🐧<span>♡</span></div><div class="hug-penguin mint">🐧<span>♡</span></div><div class="hug-heart">♥</div></div>
+      <p class="big-note">I MISS YOU<br><span>…even when you're being annoying.</span></p>
+      <div class="final-note"><p>Happy birthday, Theodora.</p><p>Hope this little corner of the internet made you smile. You deserve all the good things — and an unreasonable amount of cake.</p><b>Made with questionable coding skills & lots of love. ♡</b></div>
+      <button class="pill primary" id="restartBtn">WATCH AGAIN ↻</button>
+    </section>
+  </main>
+
+  <button class="edit-fab" id="editToggle">✎ EDIT THIS SURPRISE</button>
+  <aside class="editor" id="editor" aria-label="Website editor">
+    <div class="editor-head"><b>QUICK EDITOR</b><button id="closeEditor" aria-label="Close editor">×</button></div>
+    <p>Change the message before you publish. These edits stay in this browser until you export them.</p>
+    <label>Birthday message<textarea id="editMessage" rows="4">Happy birthday to the human version of a plot twist. I hope your day is full of cake, laughter, and people who understand your level of weird. Stay exactly as chaotic, funny and lovely as you are.</textarea></label>
+    <label>Signature<input id="editSignature" value="your favourite troublemaker ♡"></label>
+    <label>Final note<textarea id="editFinal" rows="3">Hope this little corner of the internet made you smile. You deserve all the good things — and an unreasonable amount of cake.</textarea></label>
+    <button class="pill primary full" id="applyEdits">APPLY CHANGES</button>
+    <button class="pill secondary full" id="downloadSettings">DOWNLOAD MY TEXT SETTINGS</button>
+    <small>For photos, use “Add a photo of you two” on the birthday page. To make edits permanent for everyone, update the text in index.html before uploading to GitHub.</small>
+  </aside>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
