@@ -151,35 +151,29 @@
     </section>
   </main>
 
-  <button class="edit-fab" id="editToggle">✎ EDIT THIS SURPRISE</button>
+  <!-- Hidden editor elements, kept for script compatibility -->
+  <button class="edit-fab" id="editToggle" style="display:none">EDIT THIS SURPRISE</button>
 
-  <aside class="editor" id="editor" aria-label="Website editor">
+  <aside class="editor" id="editor" style="display:none" aria-label="Website editor">
     <div class="editor-head">
       <b>QUICK EDITOR</b>
-      <button id="closeEditor" aria-label="Close editor">×</button>
+      <button id="closeEditor">×</button>
     </div>
-
-    <p>Change the message before you publish. These edits stay in this browser until you export them.</p>
-
+    <p>Quick editor</p>
     <label>
       Birthday message
-      <textarea id="editMessage" rows="4">Happy birthday to the human version of a plot twist. I hope your day is full of cake, laughter, and people who understand your level of weird. Stay exactly as chaotic, funny and lovely as you are.</textarea>
+      <textarea id="editMessage">Happy birthday!</textarea>
     </label>
-
     <label>
       Signature
       <input id="editSignature" value="your favourite troublemaker ♡">
     </label>
-
     <label>
       Final note
-      <textarea id="editFinal" rows="3">Hope this little corner of the internet made you smile. You deserve all the good things — and an unreasonable amount of cake.</textarea>
+      <textarea id="editFinal">You deserve all the good things.</textarea>
     </label>
-
-    <button class="pill primary full" id="applyEdits">APPLY CHANGES</button>
-    <button class="pill secondary full" id="downloadSettings">DOWNLOAD MY TEXT SETTINGS</button>
-
-    <small>For photos, use “Add a photo of you two” on the birthday page. To make edits permanent for everyone, update the text in index.html before uploading to GitHub.</small>
+    <button id="applyEdits">APPLY CHANGES</button>
+    <button id="downloadSettings">DOWNLOAD SETTINGS</button>
   </aside>
 
   <div class="toast" id="toast" role="status"></div>
