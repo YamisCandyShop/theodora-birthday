@@ -1,22 +1,41 @@
 
 const screens = [...document.querySelectorAll('.screen')];
 const progress = document.getElementById('progressFill');
-let current = 0, chosen = false;
+
+let current = 0;
+let noCount = 0;
+let qCount = 0;
+let soundOn = false;
 
 function go(n) {
-  screens[current].classList.remove('active');
+  if (!screens[n]) return;
+
+  screens.forEach(screen => screen.classList.remove('active'));
+
   current = n;
   screens[current].classList.add('active');
-  progress.style.width = ((n + 1) / screens.length * 100) + '%';
+
+  if (progress) {
+    progress.style.width =
+      ((current + 1) / screens.length * 100) + '%';
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function toast(msg) {
   const t = document.getElementById('toast');
+  if (!t) return;
+
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+
+  setTimeout(() => {
+    t.classList.remove('show');
+  }, 2200);
 }
+
+// FIRST SCREEN - NO THANKS
 
 const noLines = [
   'Nice try. The YES button is right there. 😌',
@@ -25,18 +44,32 @@ const noLines = [
   'You really thought you had a choice? 😂'
 ];
 
-let noCount = 0;
+const noBtn = document.getElementById('noBtn');
 
-document.getElementById('noBtn').addEventListener('click', () => {
-  document.getElementById('noMessage').textContent =
-    noLines[noCount++ % noLines.length];
+if (noBtn) {
+  noBtn.addEventListener('click', () => {
+    const message = document.getElementById('noMessage');
 
-  const b = document.getElementById('noBtn');
-  b.style.transform =
-    `translate(${Math.random() * 90 - 45}px,${Math.random() * 24 - 12}px)`;
-});
+    if (message) {
+      message.textContent = noLines[noCount % noLines.length];
+    }
 
-document.getElementById('acceptBtn').addEventListener('click', () => go(1));
+    noCount++;
+
+    noBtn.style.transform =
+      `translate(${Math.random() * 90 - 45}px, ${Math.random() * 24 - 12}px)`;
+  });
+}
+
+// ACCEPT BUTTON
+
+const acceptBtn = document.getElementById('acceptBtn');
+
+if (acceptBtn) {
+  acceptBtn.addEventListener('click', () => go(1));
+}
+
+// PENGUIN SELECTION
 
 const choiceTexts = [
   'Awww. This one says you deserve the whole cake. Not just a slice. 🍰',
@@ -46,26 +79,44 @@ const choiceTexts = [
 
 document.querySelectorAll('.penguin-card').forEach(card => {
   card.addEventListener('click', () => {
-    document.querySelectorAll('.penguin-card').forEach(c =>
-      c.classList.remove('selected')
-    );
+    document.querySelectorAll('.penguin-card').forEach(c => {
+      c.classList.remove('selected');
+    });
 
     card.classList.add('selected');
 
-    document.getElementById('choiceMessage').textContent =
-      choiceTexts[+card.dataset.penguin];
+    const message = document.getElementById('choiceMessage');
 
-    document.getElementById('toBirthday').classList.remove('hidden');
-    chosen = true;
+    if (message) {
+      message.textContent =
+        choiceTexts[Number(card.dataset.penguin)] || choiceTexts[0];
+    }
+
+    const nextButton = document.getElementById('toBirthday');
+
+    if (nextButton) {
+      nextButton.classList.remove('hidden');
+    }
   });
 });
 
-document.getElementById('toBirthday').addEventListener('click', () => go(2));
+// CONTINUE TO BIRTHDAY
 
-document.getElementById('toQuestion').addEventListener('click', () => go(3));
+const toBirthday = document.getElementById('toBirthday');
 
-const qNo = document.getElementById('questionNo');
-let qCount = 0;
+if (toBirthday) {
+  toBirthday.addEventListener('click', () => go(2));
+}
+
+// OKAY, NEXT SURPRISE
+
+const toQuestion = document.getElementById('toQuestion');
+
+if (toQuestion) {
+  toQuestion.addEventListener('click', () => go(3));
+}
+
+// QUESTION - NO BUTTON
 
 const qMessages = [
   'Incorrect. Please consult your heart and retry.',
@@ -74,49 +125,91 @@ const qMessages = [
   'One more try… for science.'
 ];
 
-qNo.addEventListener('click', () => {
-  document.getElementById('questionMessage').textContent =
-    qMessages[qCount++ % qMessages.length];
+const qNo = document.getElementById('questionNo');
 
-  qNo.style.transform =
-    `translate(${Math.random() * 110 - 55}px,${Math.random() * 24 - 12}px)`;
-});
+if (qNo) {
+  qNo.addEventListener('click', () => {
+    const message = document.getElementById('questionMessage');
 
-document.getElementById('questionYes').addEventListener('click', () => {
-  toast('Correct answer. Excellent taste. 💗');
-  setTimeout(() => go(4), 650);
-});
+    if (message) {
+      message.textContent = qMessages[qCount % qMessages.length];
+    }
 
-document.getElementById('restartBtn').addEventListener('click', () => {
-  document.getElementById('noMessage').textContent =
-    '(there is a correct answer, just saying)';
+    qCount++;
 
-  noCount = 0;
-  qCount = 0;
-  go(0);
-});
+    qNo.style.transform =
+      `translate(${Math.random() * 110 - 55}px, ${Math.random() * 24 - 12}px)`;
+  });
+}
 
-// Background music
+// QUESTION - YES BUTTON
+
+const questionYes = document.getElementById('questionYes');
+
+if (questionYes) {
+  questionYes.addEventListener('click', () => {
+    toast('Correct answer. Excellent taste. 💗');
+
+    setTimeout(() => {
+      go(4);
+    }, 650);
+  });
+}
+
+// RESTART
+
+const restartBtn = document.getElementById('restartBtn');
+
+if (restartBtn) {
+  restartBtn.addEventListener('click', () => {
+    const message = document.getElementById('noMessage');
+
+    if (message) {
+      message.textContent =
+        '(there is a correct answer, just saying)';
+    }
+
+    noCount = 0;
+    qCount = 0;
+
+    go(0);
+  });
+}
+
+// BACKGROUND MUSIC
+
 const music = document.getElementById('bgMusic');
 const soundToggle = document.getElementById('soundToggle');
-
-let soundOn = false;
 
 if (music && soundToggle) {
   soundToggle.addEventListener('click', async () => {
     if (!soundOn) {
       try {
+        music.volume = 1;
         await music.play();
+
         soundOn = true;
         soundToggle.textContent = '♫ sound on';
+
       } catch (error) {
         console.error('Music playback error:', error);
-        toast('Could not play music. Check the MP3 file.');
+
+        toast('Music error: ' + error.message);
       }
     } else {
       music.pause();
+
       soundOn = false;
       soundToggle.textContent = '♫ sound off';
     }
   });
+
+  music.addEventListener('error', () => {
+    console.error('Audio file could not load:', music.error);
+    toast('Audio file could not load. Check assets/birthday.mp3');
+  });
 }
+
+// INITIAL PROGRESS
+
+go(0);
