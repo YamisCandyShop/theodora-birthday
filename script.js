@@ -1,25 +1,33 @@
 
 const screens = [...document.querySelectorAll('.screen')];
 const progress = document.getElementById('progressFill');
-
 let current = 0;
-let chosen = false;
 
 function go(n) {
+  if (!screens[n]) return;
+
   screens[current].classList.remove('active');
   current = n;
   screens[current].classList.add('active');
-  progress.style.width = ((n + 1) / screens.length * 100) + '%';
+
+  if (progress) {
+    progress.style.width = ((n + 1) / screens.length * 100) + '%';
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function toast(msg) {
   const t = document.getElementById('toast');
+  if (!t) return;
+
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 5000);
+
+  setTimeout(() => t.classList.remove('show'), 2200);
 }
 
+// NO THANKS BUTTON
 const noLines = [
   'Nice try. The YES button is right there. 😌',
   'The penguin has reviewed your decision. It disagrees.',
@@ -29,17 +37,26 @@ const noLines = [
 
 let noCount = 0;
 
-document.getElementById('noBtn').addEventListener('click', () => {
-  document.getElementById('noMessage').textContent =
-    noLines[noCount++ % noLines.length];
+const noBtn = document.getElementById('noBtn');
 
-  const b = document.getElementById('noBtn');
-  b.style.transform =
-    `translate(${(Math.random() * 90 - 45)}px,${(Math.random() * 24 - 12)}px)`;
-});
+if (noBtn) {
+  noBtn.addEventListener('click', () => {
+    document.getElementById('noMessage').textContent =
+      noLines[noCount++ % noLines.length];
 
-document.getElementById('acceptBtn').addEventListener('click', () => go(1));
+    noBtn.style.transform =
+      `translate(${Math.random() * 90 - 45}px, ${Math.random() * 24 - 12}px)`;
+  });
+}
 
+// ACCEPT BUTTON
+const acceptBtn = document.getElementById('acceptBtn');
+
+if (acceptBtn) {
+  acceptBtn.addEventListener('click', () => go(1));
+}
+
+// PENGUIN SELECTION
 const choiceTexts = [
   'Awww. This one says you deserve the whole cake. Not just a slice. 🍰',
   'Chaotic bestie energy detected. This penguin has definitely eaten glitter.',
@@ -48,41 +65,41 @@ const choiceTexts = [
 
 document.querySelectorAll('.penguin-card').forEach(card => {
   card.addEventListener('click', () => {
-    document.querySelectorAll('.penguin-card').forEach(c =>
-      c.classList.remove('selected')
-    );
+    document.querySelectorAll('.penguin-card').forEach(c => {
+      c.classList.remove('selected');
+    });
 
     card.classList.add('selected');
 
-    document.getElementById('choiceMessage').textContent =
-      choiceTexts[+card.dataset.penguin];
+    const message = document.getElementById('choiceMessage');
+    if (message) {
+      message.textContent = choiceTexts[Number(card.dataset.penguin)];
+    }
 
-    document.getElementById('toBirthday').classList.remove('hidden');
-    chosen = true;
+    const nextButton = document.getElementById('toBirthday');
+    if (nextButton) {
+      nextButton.classList.remove('hidden');
+    }
   });
 });
 
-document.getElementById('toBirthday').addEventListener('click', () => go(2));
+// CONTINUE TO BIRTHDAY
+const toBirthday = document.getElementById('toBirthday');
 
-document.getElementById('photoUpload').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
+if (toBirthday) {
+  toBirthday.addEventListener('click', () => go(2));
+}
 
-  const reader = new FileReader();
+// CONTINUE TO QUESTION
+const toQuestion = document.getElementById('toQuestion');
 
-  reader.onload = () => {
-    document.getElementById('photoSlot').innerHTML =
-      `<img alt="Your uploaded photo" src="${reader.result}">`;
+if (toQuestion) {
+  toQuestion.addEventListener('click', () => go(3));
+}
 
-    toast('Photo added in this browser!');
-  };
-
-  reader.readAsDataURL(file);
-});
-
-document.getElementById('toQuestion').addEventListener('click', () => go(3));
-
+// QUESTION NO BUTTON
 const qNo = document.getElementById('questionNo');
+
 let qCount = 0;
 
 const qMessages = [
@@ -92,70 +109,41 @@ const qMessages = [
   'One more try… for science.'
 ];
 
-qNo.addEventListener('click', () => {
-  document.getElementById('questionMessage').textContent =
-    qMessages[qCount++ % qMessages.length];
+if (qNo) {
+  qNo.addEventListener('click', () => {
+    document.getElementById('questionMessage').textContent =
+      qMessages[qCount++ % qMessages.length];
 
-  qNo.style.transform =
-    `translate(${Math.random() * 110 - 55}px,${Math.random() * 24 - 12}px)`;
-});
-
-document.getElementById('questionYes').addEventListener('click', () => {
-  toast('Correct answer. Excellent taste. 💗');
-  setTimeout(() => go(4), 650);
-});
-
-document.getElementById('restartBtn').addEventListener('click', () => {
-  document.getElementById('noMessage').textContent =
-    '(there is a correct answer, just saying)';
-
-  noCount = 0;
-  go(0);
-});
-
-const editor = document.getElementById('editor');
-
-document.getElementById('editToggle').addEventListener('click', () =>
-  editor.classList.toggle('open')
-);
-
-document.getElementById('closeEditor').addEventListener('click', () =>
-  editor.classList.remove('open')
-);
-
-document.getElementById('applyEdits').addEventListener('click', () => {
-  document.getElementById('birthdayMessage').textContent =
-    document.getElementById('editMessage').value;
-
-  document.querySelector('.signature').textContent =
-    '— ' + document.getElementById('editSignature').value;
-
-  document.querySelector('.final-note p:nth-child(2)').textContent =
-    document.getElementById('editFinal').value;
-
-  editor.classList.remove('open');
-  toast('Your edits are applied in this browser!');
-});
-
-document.getElementById('downloadSettings').addEventListener('click', () => {
-  const data = {
-    birthdayMessage: document.getElementById('editMessage').value,
-    signature: document.getElementById('editSignature').value,
-    finalNote: document.getElementById('editFinal').value
-  };
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: 'application/json'
+    qNo.style.transform =
+      `translate(${Math.random() * 110 - 55}px, ${Math.random() * 24 - 12}px)`;
   });
+}
 
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'theodora-birthday-texts.json';
-  a.click();
+// QUESTION YES BUTTON
+const questionYes = document.getElementById('questionYes');
 
-  URL.revokeObjectURL(a.href);
-  toast('Text settings downloaded!');
-});
+if (questionYes) {
+  questionYes.addEventListener('click', () => {
+    toast('Correct answer. Excellent taste. 💗');
+
+    setTimeout(() => go(4), 650);
+  });
+}
+
+// RESTART BUTTON
+const restartBtn = document.getElementById('restartBtn');
+
+if (restartBtn) {
+  restartBtn.addEventListener('click', () => {
+    document.getElementById('noMessage').textContent =
+      '(there is a correct answer, just saying)';
+
+    noCount = 0;
+    qCount = 0;
+
+    go(0);
+  });
+}
 
 // BACKGROUND MUSIC
 const music = document.getElementById('bgMusic');
@@ -175,25 +163,13 @@ if (music && soundToggle) {
 
       } catch (error) {
         console.error('Music playback error:', error);
-
-        toast(
-          'Error: ' + error.name + ' - ' + error.message
-        );
+        toast('Could not play music. Check the MP3 file.');
       }
+
     } else {
       music.pause();
       soundOn = false;
       soundToggle.textContent = '♫ sound off';
     }
   });
-
-  music.addEventListener('error', () => {
-    console.error('Audio file error:', music.error);
-
-    if (music.error) {
-      toast('Audio file error code: ' + music.error.code);
-    }
-  });
-} else {
-  console.error('Music element or sound button not found!');
 }
